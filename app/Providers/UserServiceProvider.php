@@ -9,7 +9,7 @@ use Illuminate\Support\ServiceProvider;
 
 class UserServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    public array $singletone = [
+    public array $singletons = [
         UserService::class => UserServiceImpl::class
     ];
 
