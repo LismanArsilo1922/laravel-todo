@@ -6,6 +6,7 @@ use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
@@ -47,8 +48,9 @@ class UserController extends Controller
         ]);
     }
 
-    public function doLogout()
+    public function doLogout(Request $request): RedirectResponse
     {
-        # code...
+        $request->session()->forget('user');
+        return redirect('/');
     }
 }

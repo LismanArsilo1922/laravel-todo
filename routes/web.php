@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\OnlyGuest;
+use App\Http\Middleware\onlyMember;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,14 +17,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/', 'home');
 });
 
 Route::view('/template', 'template');
 
 Route::controller(UserController::class)->group(function () {
-    Route::get('/login', 'login');
-    Route::post('/login', 'doLogin');
-    Route::post('/doLogout', 'doLogout');
+    Route::get('/login', 'login')->middleware([OnlyGuest::class]);
+    Route::post('/login', 'doLogin')->middleware([OnlyGuest::class]);
+    Route::post('/logout', 'doLogout')->middleware((onlyMember::class));
 });
