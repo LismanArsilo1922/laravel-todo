@@ -26,7 +26,10 @@ class UserControllerTest extends TestCase
 
     public function testLoginForUserAlreadyLogin()
     {
-        $this->withSession(['user' => 'lisman'])->get('/login')->assertRedirect('/');
+        $this->withSession(['user' => 'lisman'])->post('/login', [
+            'user' => 'lisman',
+            'password' => '12345'
+        ])->assertRedirect('/');
     }
 
     // Cek login member
@@ -51,7 +54,7 @@ class UserControllerTest extends TestCase
         ])->assertSeeText('User or password is wrong');
     }
 
-    // Cek 
+    // Cek ketika logout
     public function testLogout()
     {
         $this->withSession(['user' => 'lisman'])
